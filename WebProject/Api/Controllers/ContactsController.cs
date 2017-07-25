@@ -8,15 +8,14 @@ namespace Api.Controllers
     public class ContactsController : Controller
     {
         private readonly IContactService _contactService;
-        public ContactsController(IContactService contactService) {
+        public ContactsController(IContactService contactService)
+        {
             _contactService = contactService;
         }
 
         [HttpPost]
-        public JsonResult ImportData([FromBody] ScrapeDto dto)
-        {
-            _contactService.ImportData(dto);
-            return Json("qwerty");
-        }
+        public JsonResult ImportData([FromBody] ScrapeDto dto) => Json(_contactService.ImportData(dto));
+
+        
     }
 }

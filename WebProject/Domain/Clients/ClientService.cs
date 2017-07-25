@@ -21,8 +21,10 @@ namespace Domain.Clients
 
         public int Add(ClientDto dto) => _clientRepo.Create(Mapper.Map<ClientDto, Client>(dto));
 
+        public int Update(ClientDto dto) => _clientRepo.Update(Mapper.Map<ClientDto, Client>(dto));
+
         public int Delete(int id)
-        {
+        { 
             var result = _clientRepo.Delete(id);
             return id;
         }     

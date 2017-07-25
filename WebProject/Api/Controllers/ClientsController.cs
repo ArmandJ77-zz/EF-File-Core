@@ -17,30 +17,18 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get()
-        {
-            var data = _clientService.GetAll();
-            return Json(data);
-        }
-
+        public JsonResult Get() => Json(_clientService.GetAll());
+        
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
-        {
-            var response = _clientService.Get(id);
-            return Json(response);
-        }
+        public JsonResult Get(int id) =>  Json(_clientService.Get(id));
 
         [HttpPost]
-        public JsonResult Add([FromBody]ClientDto client)
-        {
-            var response = _clientService.Add(client);
-            return Json(response);
-        }
+        public JsonResult Add([FromBody]ClientDto client)=> Json(_clientService.Add(client));
+
+        [HttpPut]
+        public JsonResult Update([FromBody] ClientDto client) => Json(_clientService.Update(client));
 
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
-        {
-            return Json(_clientService.Delete(id));
-        }
+        public JsonResult Delete(int id) => Json(_clientService.Delete(id));
     }
 }

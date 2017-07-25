@@ -56,5 +56,7 @@ namespace Domain.Contacts
 
             return $"{data.Count} Contacts Imported";
         }
+
+
     }
 }

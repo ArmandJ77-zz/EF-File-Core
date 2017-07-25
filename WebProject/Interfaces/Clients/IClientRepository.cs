@@ -9,5 +9,6 @@ namespace Interfaces.Clients
         Client Get(int id);
         int Delete(int id);
         int Create(Client client);
+        int Update(Client client);
     }
 }

@@ -9,5 +9,6 @@ namespace Interfaces.Clients
         ClientDto Get(int Id);
         int Delete(int id);
         int Add(ClientDto dto);
+        int Update(ClientDto dto);
     }
 }
