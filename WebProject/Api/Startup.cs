@@ -1,4 +1,5 @@
-﻿using Database;
+﻿using Api.Infrastructure.ServiceExtensions;
+using Database;
 using DTOs.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,9 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Reflection;
-using WebProject.Infrastructure.ServiceExtensions;
 
-namespace WebProject
+namespace Api
 {
     public class Startup
     {
@@ -41,36 +41,21 @@ namespace WebProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-           .CreateScope())
+          .CreateScope())
             {
                 serviceScope.ServiceProvider.GetService<EfFileCoreContext>().Database.Migrate();
                 //serviceScope.ServiceProvider.GetService<ISeedService>().SeedDatabase().Wait();
             }
 
+            app.UseDeveloperExceptionPage();
+            app.UseStatusCodePages();
+            app.UseBrowserLink();
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseStatusCodePages();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }

@@ -3,27 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Interfaces.Clients;
+using DTOs.Clients;
+using ViewModels;
 
 namespace WebProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IClientService _clientservice;
+        public HomeController(IClientService clientservice)
+        {
+            _clientservice = clientservice;
+        }
         public IActionResult Index()
         {
-            return View();
+            return View(new ClientViewModel());
         }
 
-        public IActionResult About()
+        public IActionResult AddClient(ClientViewModel data)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
+            var result = _clientservice.Add(data.CreateClient);
+            //var foo = _clientservice.Build();
+            //return View(@"~/Views/Home/Index.cshtml", foo);
             return View();
         }
 
