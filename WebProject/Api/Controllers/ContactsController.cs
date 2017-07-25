@@ -15,7 +15,5 @@ namespace Api.Controllers
 
         [HttpPost]
         public JsonResult ImportData([FromBody] ScrapeDto dto) => Json(_contactService.ImportData(dto));
-
-        
     }
 }

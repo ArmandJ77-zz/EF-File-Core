@@ -23,8 +23,7 @@ namespace Domain.Clients
 
         public int Update(ClientDto dto) => _clientRepo.Update(Mapper.Map<ClientDto, Client>(dto));
 
-        public int Delete(int id)
-        { 
+        public int Delete(int id){ 
             var result = _clientRepo.Delete(id);
             return id;
         }     

@@ -8,9 +8,10 @@ using Database;
 namespace Database.Migrations
 {
     [DbContext(typeof(EfFileCoreContext))]
-    partial class EfFileCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20170725175936_Add_IO_Paths")]
+    partial class Add_IO_Paths
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

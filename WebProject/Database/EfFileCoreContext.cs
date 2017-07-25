@@ -1,5 +1,6 @@
 ﻿using Database.Clients;
 using Database.Contacts;
+using Database.Files;
 using Microsoft.EntityFrameworkCore;
 
 namespace Database
@@ -9,6 +10,7 @@ namespace Database
         public DbSet<Client> Clients { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ImportedContact> ImportedContacts { get; set; }
+        public DbSet<FileConfiguration> FileConfigurations { get; set; }
 
         public EfFileCoreContext(DbContextOptions<EfFileCoreContext> options) : base(options)
         {
@@ -28,6 +30,12 @@ namespace Database
             .WithMany(b => b.ImportedContacts)
             .HasForeignKey(p => p.ClientId)
             .HasConstraintName("ForeignKey_ImportedContact_Client");
+
+            modelBuilder.Entity<FileConfiguration>()
+            .HasOne(p => p.Client)
+            .WithMany(b => b.FileConfiguration)
+            .HasForeignKey(p => p.ClientId)
+            .HasConstraintName("ForeignKey_FileCOnfiguration_Client");
         }
     }
 }

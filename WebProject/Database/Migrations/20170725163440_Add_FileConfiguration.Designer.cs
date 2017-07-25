@@ -8,9 +8,10 @@ using Database;
 namespace Database.Migrations
 {
     [DbContext(typeof(EfFileCoreContext))]
-    partial class EfFileCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20170725163440_Add_FileConfiguration")]
+    partial class Add_FileConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -91,9 +92,7 @@ namespace Database.Migrations
 
                     b.Property<int>("FileType");
 
-                    b.Property<string>("InputPath");
-
-                    b.Property<string>("OutputPath");
+                    b.Property<string>("Path");
 
                     b.HasKey("FileConfigurationId");
 

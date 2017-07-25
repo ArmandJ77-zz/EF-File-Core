@@ -9,13 +9,13 @@ namespace Domain.Contacts
 {
     public class ContactRepository : BaseRepository, IContactRepository
     {
-        public List<ImportedContact> GetImported(int clientId) => _context.ImportedContacts.Where(x => x.ClientId == clientId).ToList();
-        public List<Contact> Get(int clientId) => _context.Contacts.Where(x => x.ClientId == clientId).ToList();
-
         public ContactRepository(EfFileCoreContext context) : base(context)
         {
             _context = context;
         }
+
+        public List<ImportedContact> GetImported(int clientId) => _context.ImportedContacts.Where(x => x.ClientId == clientId).ToList();
+        public List<Contact> Get(int clientId) => _context.Contacts.Where(x => x.ClientId == clientId).ToList();
 
         public int Add(ImportedContact contact, int clientId)
         {
