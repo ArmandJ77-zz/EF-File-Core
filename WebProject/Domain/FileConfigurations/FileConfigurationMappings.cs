@@ -4,16 +4,16 @@ using DTOs.Files;
 using Enums;
 using System;
 
-namespace Domain.File
+namespace Domain.FileConfigurations
 {
-    public class FileMappings : Profile
+    public class FileConfigurationMappings : Profile
     {
-        public FileMappings() {
+        public FileConfigurationMappings()
+        {
 
-            CreateMap<FileConfigurationDto, FileConfiguration>()
+            CreateMap<FileConfigurationDto, ClientFileConfiguration>()
                 .ForMember(d => d.FileType, s => s.MapFrom(o => (int)Enum.Parse(typeof(FileType), o.FileType.ToString())))
                 .ReverseMap();
-                            
         }
     }
 }

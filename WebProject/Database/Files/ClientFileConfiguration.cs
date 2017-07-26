@@ -2,9 +2,9 @@
 
 namespace Database.Files
 {
-    public class FileConfiguration
+    public class ClientFileConfiguration
     {
-        public int FileConfigurationId { get; set; }
+        public int ClientFileConfigurationId { get; set; }
         public string InputPath { get; set; }
         public string OutputPath { get; set; }
         public int FileType { get; set; }

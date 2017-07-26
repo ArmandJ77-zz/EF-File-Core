@@ -1,14 +1,14 @@
 using DTOs.Files;
-using Interfaces.Files;
+using Interfaces.FileConfiguration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class FileController : Controller
+    public class FileConfigurationController : Controller
     {
-        public readonly IFileService _fileService;
-        public FileController(IFileService fileService) {
+        public readonly IFileConfigurationService _fileService;
+        public FileConfigurationController(IFileConfigurationService fileService) {
             _fileService = fileService;
         }
 

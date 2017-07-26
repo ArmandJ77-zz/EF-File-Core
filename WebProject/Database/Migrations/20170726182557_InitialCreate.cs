@@ -73,6 +73,28 @@ namespace Database.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ClientFileConfiguration",
+                columns: table => new
+                {
+                    ClientFileConfigurationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ClientId = table.Column<int>(nullable: false),
+                    FileType = table.Column<int>(nullable: false),
+                    InputPath = table.Column<string>(nullable: true),
+                    OutputPath = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientFileConfiguration", x => x.ClientFileConfigurationId);
+                    table.ForeignKey(
+                        name: "ForeignKey_FileCOnfiguration_Client",
+                        column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "ClientId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_ClientId",
                 table: "Contacts",
@@ -81,6 +103,11 @@ namespace Database.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ImportedContacts_ClientId",
                 table: "ImportedContacts",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClientFileConfiguration_ClientId",
+                table: "ClientFileConfiguration",
                 column: "ClientId");
         }
 
@@ -91,6 +118,9 @@ namespace Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "ImportedContacts");
+
+            migrationBuilder.DropTable(
+                name: "ClientFileConfiguration");
 
             migrationBuilder.DropTable(
                 name: "Clients");

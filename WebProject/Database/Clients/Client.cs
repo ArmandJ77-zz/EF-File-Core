@@ -12,6 +12,6 @@ namespace Database.Clients
 
         public List<Contact> Contacts { get; set; }
         public List<ImportedContact> ImportedContacts { get; set; }
-        public List<FileConfiguration> FileConfiguration { get; set; }        
+        public List<ClientFileConfiguration> ClientFileConfiguration { get; set; }        
     }
 }

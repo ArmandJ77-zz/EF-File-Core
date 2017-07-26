@@ -9,5 +9,8 @@ namespace Interfaces.Contacts
         List<ImportedContact> GetImported(int ClientId);
         List<Contact> Get(int ClientId);
         string ImportData(ScrapeDto dto);
+
+        string ExportStaging(int clientId);
+        string ImportStaging(int clientId);
     }
 }

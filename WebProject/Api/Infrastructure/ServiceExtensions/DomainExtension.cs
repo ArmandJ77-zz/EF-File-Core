@@ -1,10 +1,10 @@
 ﻿using Domain.Clients;
 using Domain.Contacts;
-using Domain.File;
+using Domain.FileConfigurations;
 using Infrastructure;
 using Interfaces.Clients;
 using Interfaces.Contacts;
-using Interfaces.Files;
+using Interfaces.FileConfiguration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.Infrastructure.ServiceExtensions
@@ -22,8 +22,8 @@ namespace Api.Infrastructure.ServiceExtensions
 
             services.AddTransient<IApiClient, ApiClient>();
 
-            services.AddTransient<IFileService,FileService>();
-            services.AddTransient<IFileRepository, FileRepository>();
+            services.AddTransient<IFileConfigurationService, FileConfigurationsService>();
+            services.AddTransient<IFileConfigurationRepository, FileConfigurationRepository>();
 
             return services;
         }

@@ -1,4 +1,5 @@
 using DTOs.DataScrape;
+using Enums;
 using Interfaces.Contacts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,26 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public JsonResult ImportData([FromBody] ScrapeDto dto) => Json(_contactService.ImportData(dto));
+        public JsonResult ImportGeneratedContacts([FromBody] ScrapeDto dto) => Json(_contactService.ImportData(dto));
+
+        [HttpGet]
+        public JsonResult ImportStagingContacts([FromQuery] int ClientId) => Json(_contactService.ImportStaging(ClientId));
+
+        [HttpGet]
+        public JsonResult ExportStagingContacts([FromQuery] int ClientId) => Json(_contactService.ExportStaging(ClientId));
+        
+
+        [HttpGet]
+        public JsonResult ExportContacts()
+        {
+            return Json("");
+        }
+
+        
+
+        [HttpGet]
+        public JsonResult ImportContacts() {
+            return Json("");
+        }
     }
 }

@@ -82,9 +82,9 @@ namespace Database.Migrations
                     b.ToTable("ImportedContacts");
                 });
 
-            modelBuilder.Entity("Database.Files.FileConfiguration", b =>
+            modelBuilder.Entity("Database.Files.ClientFileConfiguration", b =>
                 {
-                    b.Property<int>("FileConfigurationId")
+                    b.Property<int>("ClientFileConfigurationId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ClientId");
@@ -95,11 +95,11 @@ namespace Database.Migrations
 
                     b.Property<string>("OutputPath");
 
-                    b.HasKey("FileConfigurationId");
+                    b.HasKey("ClientFileConfigurationId");
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("FileConfigurations");
+                    b.ToTable("ClientFileConfiguration");
                 });
 
             modelBuilder.Entity("Database.Contacts.Contact", b =>
@@ -120,10 +120,10 @@ namespace Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Database.Files.FileConfiguration", b =>
+            modelBuilder.Entity("Database.Files.ClientFileConfiguration", b =>
                 {
                     b.HasOne("Database.Clients.Client", "Client")
-                        .WithMany("FileConfiguration")
+                        .WithMany("ClientFileConfiguration")
                         .HasForeignKey("ClientId")
                         .HasConstraintName("ForeignKey_FileCOnfiguration_Client")
                         .OnDelete(DeleteBehavior.Cascade);

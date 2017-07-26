@@ -11,7 +11,8 @@ namespace Domain.Clients
     {
         private readonly IClientRepository _clientRepo;
 
-        public ClientService(IMapper mapper, IClientRepository clientrepo) : base(mapper) {
+        public ClientService(IMapper mapper, IClientRepository clientrepo) : base(mapper)
+        {
             _clientRepo = clientrepo;
         }
 

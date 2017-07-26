@@ -1,8 +1,8 @@
 ﻿using DTOs.Files;
 
-namespace Interfaces.Files
+namespace Interfaces.FileConfiguration
 {
-    public interface IFileService
+    public interface IFileConfigurationService
     {
         FileConfigurationDto GetConfiguration(int clientId);
         int Create(FileConfigurationDto fileConfig);

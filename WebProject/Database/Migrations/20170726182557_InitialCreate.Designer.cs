@@ -8,7 +8,7 @@ using Database;
 namespace Database.Migrations
 {
     [DbContext(typeof(EfFileCoreContext))]
-    [Migration("20170725153723_InitialCreate")]
+    [Migration("20170726182557_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,26 @@ namespace Database.Migrations
                     b.ToTable("ImportedContacts");
                 });
 
+            modelBuilder.Entity("Database.Files.ClientFileConfiguration", b =>
+                {
+                    b.Property<int>("ClientFileConfigurationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ClientId");
+
+                    b.Property<int>("FileType");
+
+                    b.Property<string>("InputPath");
+
+                    b.Property<string>("OutputPath");
+
+                    b.HasKey("ClientFileConfigurationId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("ClientFileConfiguration");
+                });
+
             modelBuilder.Entity("Database.Contacts.Contact", b =>
                 {
                     b.HasOne("Database.Clients.Client", "Client")
@@ -98,6 +118,15 @@ namespace Database.Migrations
                         .WithMany("ImportedContacts")
                         .HasForeignKey("ClientId")
                         .HasConstraintName("ForeignKey_ImportedContact_Client")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Database.Files.ClientFileConfiguration", b =>
+                {
+                    b.HasOne("Database.Clients.Client", "Client")
+                        .WithMany("ClientFileConfiguration")
+                        .HasForeignKey("ClientId")
+                        .HasConstraintName("ForeignKey_FileCOnfiguration_Client")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }
