@@ -20,7 +20,7 @@ namespace Domain.FileConfigurations.Builders
                 Type t = list[0].GetType();
                 string newLine = Environment.NewLine;
 
-                FileCreationHelper.ExistanceCheck(path);
+                FileCreationHelper.ExistanceCheckCreate(path);
 
                 using (var sw = new StreamWriter(File.Create(path)))
                 {
@@ -47,7 +47,7 @@ namespace Domain.FileConfigurations.Builders
             catch (Exception ex)
             {
                 var sb = new StringBuilder();
-                sb.Append("Thats not cool, something went worng with the export:");
+                sb.Append("Thats not cool, something went wrong with the export:");
                 sb.Append(Environment.NewLine);
                 sb.Append(ex.InnerException.ToString());
                 return sb.ToString();
@@ -56,7 +56,10 @@ namespace Domain.FileConfigurations.Builders
 
         public static List<string> ReadFromCsvFile(string path) 
         {
-            return File.ReadAllLines(path).Skip(1).ToList();
+            if (FileCreationHelper.ExistanceCheck(path))
+                return File.ReadAllLines(path).Skip(1).ToList();
+
+            return null;
         }
     }
 }

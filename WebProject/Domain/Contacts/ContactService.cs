@@ -14,6 +14,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Collections;
+using Enums;
 
 namespace Domain.Contacts
 {
@@ -67,6 +69,43 @@ namespace Domain.Contacts
             return $"{data.Count} Contacts Imported";
         }
 
+        public string ImportStaging(int clientId)
+        {
+            var client = _clientService.Get(clientId);
+
+            if (client == null)
+                return "Client not found";
+
+            var fileConfig = _fileService.GetConfiguration(clientId);
+
+            if (fileConfig == null)
+                return $"File configuration not found for client {clientId}";
+
+            if (string.IsNullOrEmpty(fileConfig.OutputPath))
+                return $"No output file configuration found for Client: {clientId}";
+
+            var list = GetImported(clientId);
+
+            var writeFunc = new Dictionary<FileType, Func<List<string>>> {
+                {FileType.CSV, () =>  CSVBuilder.ReadFromCsvFile(fileConfig.InputPath)},
+                {FileType.JSON, () =>  JsonBuilder.ReadFromJsonFile(fileConfig.InputPath)}
+            };
+
+            var data = writeFunc[fileConfig.FileType].Invoke();
+
+            if (data == null)
+                return "Import Failed";
+
+            var dto = Mapper.Map<List<string>, List<ImportedContact>>(data);
+
+            dto.ForEach(item =>
+            {
+                _contactRepo.Add(item, clientId);
+            });
+
+            return $"Imported {dto.Count} contacts";            
+        }
+
         public string ExportStaging(int clientId)
         {
             var client = _clientService.Get(clientId);
@@ -84,15 +123,13 @@ namespace Domain.Contacts
 
             var list = GetImported(clientId);
 
-            
-            //TODO add func to toggle on client filetype
+            var writeFunc = new Dictionary<FileType, Func<string>> {
+                {FileType.CSV, () =>  CSVBuilder.WriteToCsv(list, fileConfig.OutputPath)},
+                {FileType.JSON, () =>  JsonBuilder.WriteToJson(list,fileConfig.OutputPath)}
 
-            return CSVBuilder.WriteToCsv(list, fileConfig.OutputPath);
-        }
+            };
 
-        //TO DO 
-        public string ImportStaging(int clientId) {
-            throw new NotImplementedException();
+            return writeFunc[fileConfig.FileType].Invoke();
         }
     }
 }

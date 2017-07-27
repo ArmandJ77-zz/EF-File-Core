@@ -3,6 +3,7 @@ using Database.Contacts;
 using DTOs.Contacts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain.Contacts
 {
@@ -30,23 +31,29 @@ namespace Domain.Contacts
              .ReverseMap()
              ;
 
-            CreateMap<string, ImportedContact>()
+            CreateMap<List<string>, List<ImportedContact>>()
                 .AfterMap((s,d) => {
-                    string[] values = s.Split(',');
 
-                    var dto = new ImportedContact()
+                    s.ForEach(item =>
                     {
-                        ImportedContactId = Convert.ToInt16(values[0]),
-                        Name = values[1],
-                        Surname = values[2],
-                        Gender = values[3],
-                        Region = values[4],
-                        Age = Convert.ToInt16(values[5]),
-                        Title = values[6],
-                        Phone = values[7],
-                        Email = values[8],
-                        Photo = values[9]
-                    };
+                        string[] values = item.Split(',');
+
+                        var dto = new ImportedContact()
+                        {
+                            //ImportedContactId = Convert.ToInt16(values[0]),
+                            Name = values[1],
+                            Surname = values[2],
+                            Gender = values[3],
+                            Region = values[4],
+                            Age = Convert.ToInt16(values[5]),
+                            Title = values[6],
+                            Phone = values[7],
+                            Email = values[8],
+                            Photo = values[9]
+                        };
+
+                        d.Add(dto);
+                    });                    
                 });
         }
     }
