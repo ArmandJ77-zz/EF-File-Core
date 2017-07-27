@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Collections;
 using Enums;
+using System.Text.RegularExpressions;
 
 namespace Domain.Contacts
 {
@@ -100,7 +101,11 @@ namespace Domain.Contacts
 
             dto.ForEach(item =>
             {
-                _contactRepo.Add(item, clientId);
+                item.Phone = ValidatePhoneNumber(item.Phone);
+                var contact = Mapper.Map<ImportedContact, Contact>(item);
+                contact.IsValid = true;
+                contact.ClientId = clientId;
+                _contactRepo.Add(contact);
             });
 
             return $"Imported {dto.Count} contacts";            
@@ -130,6 +135,10 @@ namespace Domain.Contacts
             };
 
             return writeFunc[fileConfig.FileType].Invoke();
+        }
+
+        private string ValidatePhoneNumber(string phone) {
+            return Regex.Replace(phone, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled);
         }
     }
 }

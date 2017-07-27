@@ -3,15 +3,16 @@ using Database.Contacts;
 using DTOs.Contacts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Domain.Contacts
 {
     public class ContactMappings : Profile
     {
-        public ContactMappings() {
+        public ContactMappings()
+        {
             CreateMap<List<ImportedContactsDto>, List<ImportedContact>>()
-                .AfterMap((s,d) => {
+                .AfterMap((s, d) =>
+                {
                     s.ForEach(item =>
                     {
                         d.Add(new ImportedContact
@@ -31,8 +32,22 @@ namespace Domain.Contacts
              .ReverseMap()
              ;
 
+            CreateMap<ImportedContactsDto, ImportedContact>()
+                .ReverseMap()
+                ;
+
+            CreateMap<ImportedContact, Contact>()
+                .ForMember(s => s.ClientId, d => d.MapFrom(o => o.ClientId))
+                .ForMember(s => s.Name, d => d.MapFrom(o => o.Name))
+                .ForMember(s => s.PhoneNo, d => d.MapFrom(o => o.Phone))
+                .ForMember(s => s.Email, d => d.MapFrom(o => o.Email))
+                .ReverseMap()
+                ;
+
+
             CreateMap<List<string>, List<ImportedContact>>()
-                .AfterMap((s,d) => {
+                .AfterMap((s, d) =>
+                {
 
                     s.ForEach(item =>
                     {
@@ -53,7 +68,7 @@ namespace Domain.Contacts
                         };
 
                         d.Add(dto);
-                    });                    
+                    });
                 });
         }
     }
