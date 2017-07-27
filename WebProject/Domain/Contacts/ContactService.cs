@@ -111,6 +111,33 @@ namespace Domain.Contacts
             return $"Imported {dto.Count} contacts";            
         }
 
+
+        public string Export(int clientId)
+        {
+            var client = _clientService.Get(clientId);
+
+            if (client == null)
+                return "Client not found";
+
+            var fileConfig = _fileService.GetConfiguration(clientId);
+
+            if (fileConfig == null)
+                return $"File configuration not found for client {clientId}";
+
+            if (string.IsNullOrEmpty(fileConfig.OutputPath))
+                return $"No output file configuration found for Client: {clientId}";
+
+            var list = _contactRepo.Get(clientId);
+
+            var writeFunc = new Dictionary<FileType, Func<string>> {
+                {FileType.CSV, () =>  CSVBuilder.WriteToCsv(list, fileConfig.OutputPath)},
+                {FileType.JSON, () =>  JsonBuilder.WriteToJson(list,fileConfig.OutputPath)}
+
+            };
+
+            return writeFunc[fileConfig.FileType].Invoke();
+        }
+
         public string ExportStaging(int clientId)
         {
             var client = _clientService.Get(clientId);

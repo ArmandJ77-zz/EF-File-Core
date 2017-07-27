@@ -22,19 +22,9 @@ namespace Api.Controllers
 
         [HttpGet]
         public JsonResult ExportStagingContacts([FromQuery] int ClientId) => Json(_contactService.ExportStaging(ClientId));
-        
+
 
         [HttpGet]
-        public JsonResult ExportContacts()
-        {
-            return Json("");
-        }
-
-        
-
-        [HttpGet]
-        public JsonResult ImportContacts() {
-            return Json("");
-        }
+        public JsonResult ExportContacts([FromQuery] int ClientId) => Json(_contactService.Export(ClientId));
     }
 }
