@@ -21,6 +21,7 @@ Build an api which has the ability to:
   - Install VS 2017
   - Install .Net Core
   - SSMS 2017
+  - Postman
 
 ## Setting up EF Core
 
